@@ -3,7 +3,6 @@ public class Player {
     private int score;
     private int numQuestionsRight;
     private int numQuestionsWrong;
-    private int lives;
     private String name;
     private int roundWins;
     private boolean hasStreak;
@@ -13,7 +12,6 @@ public class Player {
         score = 0;
         numOfRounds = 0;
         numQuestionsRight = 0;
-        lives = 3;
         numQuestionsWrong = 0;
         this.name = name;
         roundWins = 0;

@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+
 public class GameShowLogic {
     private Scanner myScanner;
     private int totalNumRounds;
@@ -23,8 +24,8 @@ public class GameShowLogic {
         String secondPlayerName = myScanner.nextLine();
         Player player2 = new Player(secondPlayerName);
         System.out.println("We have our two players! Let me explain the rules.");
-        System.out.println("Each player has three lives and we'll have multiple rounds with multiple questions.");
-        System.out.println("Each round has a max amount of points, 200 points, that can be earned." + "\n" + "Once somebody hits 1000 points or loses all 3 lives, the game will end.");
+        System.out.println("Each player has three lives and we'll have multiple rounds with multiple" + "\n" + "questions.");
+        System.out.println("Each round has a max amount of points, 200 points, that can be earned." + "\n" + "Once somebody hits 1000 points, the game will end.");
         System.out.println("Now that the game is explain and we're all ready, let's start!");
         System.out.println("Let's flip a coin to see who goes first.");
         int result = (int)(Math.random() * 2) + 1;
@@ -42,7 +43,8 @@ public class GameShowLogic {
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣬⣉⣉⣛⠀⢸⣿⣿⣿⣿⣿⣿⣄⠀⠀⠀\n" +
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠿⠟⠁⢸⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀\n" +
                 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠛⠶⠾⠿⠿⢿⣿⣿⣿⣿⣿⣿⡇⠀\n" +
-                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠉⠁⠀"); //https://emojicombos.com/coinflip-ascii-art
+                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠉⠉⠉⠉⠉⠉⠁⠀"); //https://emojicombos.com/coinflip-ascii-art
+        // thinking about adding a pause
         System.out.println("     ______________\n" +
                 "    __,.,---'''''              '''''---..._\n" +
                 " ,-'             .....:::''::.:            '`-.\n" +
@@ -65,7 +67,6 @@ public class GameShowLogic {
     }
 
     private void round() {
-
         System.out.println("FIRST ROUND");
 
     }
