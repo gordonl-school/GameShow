@@ -4,14 +4,17 @@ import java.lang.Thread; //https://www.geeksforgeeks.org/thread-sleep-method-in-
 public class GameShowLogic {
     private Scanner myScanner;
     private int totalNumRounds;
+    private Player currentPlayer;
+    private Player player1;
+    private Player player2;
 
     public GameShowLogic() {
         myScanner = new Scanner(System.in);
-        totalNumRounds = 5;
     }
 
     public void start() {
         introduction();
+        round();
     }
 
     private void introduction() {
@@ -19,10 +22,10 @@ public class GameShowLogic {
         System.out.println("We're going to have two players face off against each other.");
         System.out.print("Our first player is ");
         String firstPlayerName = myScanner.nextLine();
-        Player player1 = new Player(firstPlayerName);
+        player1 = new Player(firstPlayerName);
         System.out.print("Our second player is ");
         String secondPlayerName = myScanner.nextLine();
-        Player player2 = new Player(secondPlayerName);
+        player2 = new Player(secondPlayerName);
         System.out.println("We have our two players! Let me explain the rules.");
         System.out.println("Each player has three lives and we'll have multiple rounds with multiple" + "\n" + "questions.");
         try {
@@ -32,7 +35,7 @@ public class GameShowLogic {
         try {
             Thread.sleep(2000);
         } catch(InterruptedException e) {}
-        System.out.println("Now that the game is explain and we're all ready, let's start!");
+        System.out.println("Now that the game is explained and we're all ready, let's start!");
         System.out.println("Let's flip a coin to see who goes first.");
         try {
             Thread.sleep(1000);
@@ -70,23 +73,149 @@ public class GameShowLogic {
             Thread.sleep(2000);
         } catch(InterruptedException e) {}
         if (result == 1) {
-            player1.changePriority();
             String player1Name = player1.getName();
             System.out.println("It seems like " + player1Name + " will be going first.");
+            currentPlayer = player1;
         } else {
-            player2.changePriority();
             String player2Name = player2.getName();
             System.out.println("It seems like " + player2Name + " will be going first.");
+            currentPlayer = player2;
         }
-
     }
 
     private void round() {
         System.out.println("FIRST ROUND");
+        Question[] questions = new Question[20];
+        int item = 0;
+        Question q1 = new Question("How many days does it take for the Earth to orbit the Sun?", "365");
+        questions[item] = q1;
+        String nameOfQuestion = questions[item].getPrompt();
 
+        System.out.println(currentPlayer.getName() + " " + nameOfQuestion.substring(0, 1).toLowerCase() + nameOfQuestion.substring(1));
+        String answer = myScanner.nextLine();
+        if (answer.toLowerCase().equals("365")) {
+            System.out.println("Yes! The correct answer is " + questions[item].getAnswer());
+            currentPlayer.updateScore(50);
+        } else if (!(answer.toLowerCase().equals("365"))) {
+            System.out.println("Sorry. The correct answer is " + questions[item].getAnswer());
+        }
+
+        item++;
+        checkAPlayer();
+
+        Question q2 = new Question("What do you call a group of crows?", "murder");
+        questions[item] = q2;
+        nameOfQuestion = questions[item].getPrompt();
+        System.out.println("Now, " + currentPlayer.getName() + ", " + nameOfQuestion.substring(0, 1).toLowerCase() + nameOfQuestion.substring(1));
+        answer = myScanner.nextLine();
+        if (answer.toLowerCase().equals("murder")) {
+            System.out.println("Yes! The correct answer is " + questions[item].getAnswer());
+            currentPlayer.updateScore(50);
+        } else {
+            System.out.println("Sorry. The correct answer is " + questions[item].getAnswer());
+        }
+
+        item++;
+        checkAPlayer();
+
+        Question q3 = new Question("", "");
+        questions[item] = q3;
     }
 
-    private void endOfRound() {
-
+    private void checkAPlayer() {
+        if (currentPlayer == player1) {
+            currentPlayer = player2;
+        } else {
+            currentPlayer = player1;
+        }
     }
+
+    private void makeQuestions() {
+        Question[] questions = new Question[20];
+        int item = 0;
+
+        Question q1 = new Question("How many days does it take for the Earth to orbit the Sun?", "365");
+        questions[item] = q1;
+        item++;
+
+        Question q2 = new Question("What do you call a group of crows?", "murder");
+        questions[item] = q2;
+        item++;
+
+        Question q3 = new Question("What is the most popular music streaming service?", "spotify");
+        questions[item] = q3;
+        item++;
+
+        Question q4 = new Question("What is the name of the puzzle that is a 3x3, three-dimensional cube?", "rubik's cube");
+        questions[item] = q4;
+        item++;
+
+        Question q5 = new Question("What is the best selling book of all time?", "bible");
+        questions[item] = q5;
+        item++;
+
+        Question q6 = new Question("Eli Whitney made what invention that changed the South?", "cotton gin");
+        questions[item] = q6;
+        item++;
+
+        Question q7 = new Question("Which president died after a month in office from pneumonia?", "william henry harrison");
+        questions[item] = q7;
+        item++;
+
+        Question q8 = new Question("Who is the leading scorer in NBA history?", "lebron james");
+        questions[item] = q8;
+        item++;
+
+        Question q9 = new Question("");
+        questions[item] = q9;
+        item++;
+
+        Question q10 = new Question();
+        questions[item] = q10;
+        item++;
+
+        Question q11 = new Question();
+        questions[item] = q11;
+        item++;
+
+        Question q12 = new Question();
+        questions[item] = q12;
+        item++;
+
+        Question q13 = new Question();
+        questions[item] = q13;
+        item++;
+
+        Question q14 = new Question();
+        questions[item] = q14;
+        item++;
+
+        Question q15 = new Question();
+        questions[item] = q15;
+        item++;
+
+        Question q16 = new Question();
+        questions[item] = q16;
+        item++;
+
+        Question q17 = new Question();
+        questions[item] = q17;
+        item++;
+
+        Question q18 = new Question();
+        questions[item] = q18;
+        item++;
+
+        Question q19 = new Question();
+        questions[item] = q19;
+        item++;
+
+        Question q20 = new Question();
+        questions[item] = q20;
+        item++;
+    }
+
+
+
+
 }

@@ -5,8 +5,7 @@ public class Player {
     private int numQuestionsWrong;
     private String name;
     private int roundWins;
-    private boolean hasStreak;
-    private boolean priority;
+//    private boolean priority;
 
     public Player(String name) {
         score = 0;
@@ -15,8 +14,7 @@ public class Player {
         numQuestionsWrong = 0;
         this.name = name;
         roundWins = 0;
-        hasStreak = false;
-        priority = false;
+//        priority = false;
     }
 
     public int getScore() {
@@ -31,13 +29,14 @@ public class Player {
         return numQuestionsRight;
     }
 
-    public void changeStreak() {
-        hasStreak = false;
-    }
 
-    public void changePriority() {
-        priority = !(priority);
-    }
+//    public void changePriority() {
+//        priority = !priority;
+//    }
+
+//    public boolean getPriority() {
+//        return priority;
+//    }
 
     public void updateScore(int points) {
         score += points;
