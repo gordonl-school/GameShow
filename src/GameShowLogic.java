@@ -7,6 +7,9 @@ public class GameShowLogic {
     private Player currentPlayer;
     private Player player1;
     private Player player2;
+    private Question currentQuestion;
+    private Player winner;
+    private Player winner2;
 
     public GameShowLogic() {
         myScanner = new Scanner(System.in);
@@ -27,11 +30,11 @@ public class GameShowLogic {
         String secondPlayerName = myScanner.nextLine();
         player2 = new Player(secondPlayerName);
         System.out.println("We have our two players! Let me explain the rules.");
-        System.out.println("Each player has three lives and we'll have multiple rounds with multiple" + "\n" + "questions.");
+        System.out.println("Each player will have to answer a set of questions.");
         try {
             Thread.sleep(1000);
         } catch(InterruptedException e) {} // https://stackoverflow.com/questions/43507587/how-to-pause-my-java-program-for-2-seconds (used multiple times)
-        System.out.println("Each round has a max amount of points, 200 points, that can be earned." + "\n" + "Once somebody hits 1000 points, the game will end.");
+        System.out.println("Each question is worth 50 points." + "\n" + "Once all the questions, the game will end." + "\n" +  "Whoever has the highest score wins.");
         try {
             Thread.sleep(2000);
         } catch(InterruptedException e) {}
@@ -84,42 +87,68 @@ public class GameShowLogic {
     }
 
     private void round() {
-        System.out.println("FIRST ROUND");
-        Question[] questions = new Question[20];
+        System.out.println("ROUND START");
+        Question[] questions = makeQuestions();
         int item = 0;
-        Question q1 = new Question("How many days does it take for the Earth to orbit the Sun?", "365");
-        questions[item] = q1;
-        String nameOfQuestion = questions[item].getPrompt();
 
-        System.out.println(currentPlayer.getName() + " " + nameOfQuestion.substring(0, 1).toLowerCase() + nameOfQuestion.substring(1));
-        String answer = myScanner.nextLine();
-        if (answer.toLowerCase().equals("365")) {
-            System.out.println("Yes! The correct answer is " + questions[item].getAnswer());
-            currentPlayer.updateScore(50);
-        } else if (!(answer.toLowerCase().equals("365"))) {
-            System.out.println("Sorry. The correct answer is " + questions[item].getAnswer());
+        while (item < 20) {
+            String nameOfQuestion = questions[item].getPrompt();
+            System.out.println(currentPlayer.getName() + " " + nameOfQuestion.substring(0, 1).toLowerCase() + nameOfQuestion.substring(1));
+            String answer = myScanner.nextLine();
+            if (answer.toLowerCase().equals(questions[item].getAnswer())) {
+                System.out.println("Yes! The correct answer is " + questions[item].getAnswer());
+                currentPlayer.updateScore(50);
+            } else if (!(answer.toLowerCase().equals(questions[item].getAnswer()))) {
+                System.out.println("Sorry. The correct answer is " + questions[item].getAnswer());
+            }
+
+            if (item % 2 == 1) {
+                System.out.println();
+                System.out.println("Scoreboard:");
+                System.out.println(player1.getName() + "'s score: " + player1.getScore() + " points");
+                System.out.println(player2.getName() + "'s score: " + player2.getScore() + " points");
+                System.out.println();
+            }
+            item++;
+            checkAPlayer();
         }
 
-        item++;
-        checkAPlayer();
-
-        Question q2 = new Question("What do you call a group of crows?", "murder");
-        questions[item] = q2;
-        nameOfQuestion = questions[item].getPrompt();
-        System.out.println("Now, " + currentPlayer.getName() + ", " + nameOfQuestion.substring(0, 1).toLowerCase() + nameOfQuestion.substring(1));
-        answer = myScanner.nextLine();
-        if (answer.toLowerCase().equals("murder")) {
-            System.out.println("Yes! The correct answer is " + questions[item].getAnswer());
-            currentPlayer.updateScore(50);
-        } else {
-            System.out.println("Sorry. The correct answer is " + questions[item].getAnswer());
-        }
-
-        item++;
-        checkAPlayer();
-
-        Question q3 = new Question("", "");
-        questions[item] = q3;
+        checkScore();
+//        Question[] questions = new Question[20];
+//        int item = 0;
+//        Question q1 = new Question("How many days does it take for the Earth to orbit the Sun?", "365");
+//        questions[item] = q1;
+//        String nameOfQuestion = questions[item].getPrompt();
+//
+//        System.out.println(currentPlayer.getName() + " " + nameOfQuestion.substring(0, 1).toLowerCase() + nameOfQuestion.substring(1));
+//        String answer = myScanner.nextLine();
+//        if (answer.toLowerCase().equals("365")) {
+//            System.out.println("Yes! The correct answer is " + questions[item].getAnswer());
+//            currentPlayer.updateScore(50);
+//        } else if (!(answer.toLowerCase().equals("365"))) {
+//            System.out.println("Sorry. The correct answer is " + questions[item].getAnswer());
+//        }
+//
+//        item++;
+//        checkAPlayer();
+//
+//        Question q2 = new Question("What do you call a group of crows?", "murder");
+//        questions[item] = q2;
+//        nameOfQuestion = questions[item].getPrompt();
+//        System.out.println("Now, " + currentPlayer.getName() + ", " + nameOfQuestion.substring(0, 1).toLowerCase() + nameOfQuestion.substring(1));
+//        answer = myScanner.nextLine();
+//        if (answer.toLowerCase().equals("murder")) {
+//            System.out.println("Yes! The correct answer is " + questions[item].getAnswer());
+//            currentPlayer.updateScore(50);
+//        } else {
+//            System.out.println("Sorry. The correct answer is " + questions[item].getAnswer());
+//        }
+//
+//        item++;
+//        checkAPlayer();
+//
+//        Question q3 = new Question("", "");
+//        questions[item] = q3;
     }
 
     private void checkAPlayer() {
@@ -130,7 +159,7 @@ public class GameShowLogic {
         }
     }
 
-    private void makeQuestions() {
+    private Question[] makeQuestions() {
         Question[] questions = new Question[20];
         int item = 0;
 
@@ -166,53 +195,69 @@ public class GameShowLogic {
         questions[item] = q8;
         item++;
 
-        Question q9 = new Question("");
+        Question q9 = new Question("What is the smallest country in the world?", "vatican city");
         questions[item] = q9;
         item++;
 
-        Question q10 = new Question();
+        // rest of questions come from https://www.today.com/life/inspiration/trivia-questions-rcna39101
+        Question q10 = new Question("Jim Henson is the creator of what beloved cast of characters?", "muppets");
         questions[item] = q10;
         item++;
 
-        Question q11 = new Question();
+        Question q11 = new Question("What is the name of Elvis Presley's Memphis home?", "graceland");
         questions[item] = q11;
         item++;
 
-        Question q12 = new Question();
+        Question q12 = new Question("Who starred alongside Chris Tucker in the 1998 movie \"Rush Hour\"", "jackie chan");
         questions[item] = q12;
         item++;
 
-        Question q13 = new Question();
+        Question q13 = new Question("Which Italian town is the setting for Romeo and Juliet?", "verona");
         questions[item] = q13;
         item++;
 
-        Question q14 = new Question();
+        Question q14 = new Question("The unicorn is the national animal of which country?", "unicorn");
         questions[item] = q14;
         item++;
 
-        Question q15 = new Question();
+        Question q15 = new Question("What condiment was once sold as a medicinal cure for diarrhea?", "ketchup");
         questions[item] = q15;
         item++;
 
-        Question q16 = new Question();
+        Question q16 = new Question("What species of fish is Nemo?", "clown fish");
         questions[item] = q16;
         item++;
 
-        Question q17 = new Question();
+        Question q17 = new Question("What blood type is a universal donor?", "o negative");
         questions[item] = q17;
         item++;
 
-        Question q18 = new Question();
+        Question q18 = new Question("Who plays Ken in the 2023 movie \"Barbie\"?", "ryan gosling");
         questions[item] = q18;
         item++;
 
-        Question q19 = new Question();
+        Question q19 = new Question("M&M's Fruit Chews would eventually become what popular candy?", "starburst");
         questions[item] = q19;
         item++;
 
-        Question q20 = new Question();
+        Question q20 = new Question("What is the only food that can never go bad?", "honey");
         questions[item] = q20;
-        item++;
+        item = 0;
+
+        return questions;
+    }
+
+    private void checkScore() {
+        if (player1.getScore() > player2.getScore()) {
+            winner = player1;
+        }
+        if (player2.getScore() > player1.getScore()) {
+            winner = player2;
+        }
+        if (player1.getScore() == player2.getScore()) {
+            winner = player1;
+            winner2 = player2;
+        }
     }
 
 
