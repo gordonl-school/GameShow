@@ -114,6 +114,38 @@ public class GameShowLogic {
         }
 
         checkScore();
+        int longestLength = 0;
+        if (winner2 != null) {
+            if (winner.getName().length() > winner2.getName().length()) {
+                longestLength = winner.getName().length();
+            } else {
+                longestLength = winner2.getName().length();
+            }
+        } else {
+            longestLength = winner.getName().length();
+        }
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < longestLength + 7; j++) {
+                System.out.println("_");
+            }
+        }
+        System.out.println("* " + winner.getName() + " won! *");;
+        if (winner2 != null) {
+            System.out.println("* " + winner2.getName() + " won! *");
+        }
+        // still need to fix this
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < longestLength + 7; j++) {
+//                System.out.print("_");
+                if (j == longestLength + 6) {
+                    System.out.print("-" + "\n");
+                } else {
+                    System.out.print("-");
+                }
+            }
+        }
+
 //        Question[] questions = new Question[20];
 //        int item = 0;
 //        Question q1 = new Question("How many days does it take for the Earth to orbit the Sun?", "365");
@@ -216,7 +248,7 @@ public class GameShowLogic {
         questions[item] = q13;
         item++;
 
-        Question q14 = new Question("The unicorn is the national animal of which country?", "unicorn");
+        Question q14 = new Question("The unicorn is the national animal of which country?", "scotland");
         questions[item] = q14;
         item++;
 
