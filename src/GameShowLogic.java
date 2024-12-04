@@ -34,7 +34,7 @@ public class GameShowLogic {
         try {
             Thread.sleep(1000);
         } catch(InterruptedException e) {} // https://stackoverflow.com/questions/43507587/how-to-pause-my-java-program-for-2-seconds (used multiple times)
-        System.out.println("Each question is worth 50 points." + "\n" + "Once all the questions, the game will end." + "\n" +  "Whoever has the highest score wins.");
+        System.out.println("Each question is worth 100 points." + "\n" + "Once all the questions, the game will end." + "\n" +  "Whoever has the highest score wins.");
         try {
             Thread.sleep(2000);
         } catch(InterruptedException e) {}
@@ -97,7 +97,7 @@ public class GameShowLogic {
             String answer = myScanner.nextLine();
             if (answer.toLowerCase().equals(questions[item].getAnswer())) {
                 System.out.println("Yes! The correct answer is " + questions[item].getAnswer());
-                currentPlayer.updateScore(50);
+                currentPlayer.updateScore(100);
             } else if (!(answer.toLowerCase().equals(questions[item].getAnswer()))) {
                 System.out.println("Sorry. The correct answer is " + questions[item].getAnswer());
             }
@@ -122,12 +122,20 @@ public class GameShowLogic {
                 longestLength = winner2.getName().length();
             }
         } else {
-            longestLength = winner.getName().length();
+            if (winner != null) {
+                longestLength = winner.getName().length();
+            } else {
+                longestLength = 0;
+            }
         }
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < longestLength + 7; j++) {
-                System.out.println("_");
+                if (j == longestLength + 6) {
+                    System.out.print("-" + "\n");
+                } else {
+                    System.out.print("-");
+                }
             }
         }
         System.out.println("* " + winner.getName() + " won! *");;
@@ -136,9 +144,9 @@ public class GameShowLogic {
         }
         // still need to fix this
         for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < longestLength + 7; j++) {
+            for (int j = 0; j < longestLength + 9; j++) {
 //                System.out.print("_");
-                if (j == longestLength + 6) {
+                if (j == longestLength + 8) {
                     System.out.print("-" + "\n");
                 } else {
                     System.out.print("-");
@@ -286,9 +294,12 @@ public class GameShowLogic {
         if (player2.getScore() > player1.getScore()) {
             winner = player2;
         }
-        if (player1.getScore() == player2.getScore()) {
+        if (player1.getScore() == player2.getScore() && player1.getScore() != 0) {
             winner = player1;
             winner2 = player2;
+        } else {
+            winner = null;
+            winner2 = null;
         }
     }
 
