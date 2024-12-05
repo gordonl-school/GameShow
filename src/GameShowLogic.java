@@ -3,7 +3,6 @@ import java.lang.Thread; //https://www.geeksforgeeks.org/thread-sleep-method-in-
 
 public class GameShowLogic {
     private Scanner myScanner;
-    private int totalNumRounds;
     private Player currentPlayer;
     private Player player1;
     private Player player2;
@@ -93,12 +92,12 @@ public class GameShowLogic {
 
         while (item < 20) {
             String nameOfQuestion = questions[item].getPrompt();
-            System.out.println(currentPlayer.getName() + " " + nameOfQuestion.substring(0, 1).toLowerCase() + nameOfQuestion.substring(1));
+            System.out.println(currentPlayer.getName() + ", " + nameOfQuestion.substring(0, 1).toLowerCase() + nameOfQuestion.substring(1));
             String answer = myScanner.nextLine();
-            if (answer.toLowerCase().equals(questions[item].getAnswer())) {
+            if (answer.equalsIgnoreCase(questions[item].getAnswer())) {
                 System.out.println("Yes! The correct answer is " + questions[item].getAnswer());
                 currentPlayer.updateScore(100);
-            } else if (!(answer.toLowerCase().equals(questions[item].getAnswer()))) {
+            } else {
                 System.out.println("Sorry. The correct answer is " + questions[item].getAnswer());
             }
 
@@ -113,8 +112,13 @@ public class GameShowLogic {
             checkAPlayer();
         }
 
+        display();
+    }
+
+    private void display() {
         checkScore();
         int longestLength = 0;
+        // helps decide how long the frame should be depending on who won
         if (winner2 != null) {
             if (winner.getName().length() > winner2.getName().length()) {
                 longestLength = winner.getName().length();
@@ -125,27 +129,13 @@ public class GameShowLogic {
             if (winner != null) {
                 longestLength = winner.getName().length();
             } else {
-                longestLength = 0;
+                longestLength = 6;
             }
         }
 
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < longestLength + 7; j++) {
-                if (j == longestLength + 6) {
-                    System.out.print("-" + "\n");
-                } else {
-                    System.out.print("-");
-                }
-            }
-        }
-        System.out.println("* " + winner.getName() + " won! *");;
-        if (winner2 != null) {
-            System.out.println("* " + winner2.getName() + " won! *");
-        }
-        // still need to fix this
+        // frame
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < longestLength + 9; j++) {
-//                System.out.print("_");
                 if (j == longestLength + 8) {
                     System.out.print("-" + "\n");
                 } else {
@@ -154,41 +144,28 @@ public class GameShowLogic {
             }
         }
 
-//        Question[] questions = new Question[20];
-//        int item = 0;
-//        Question q1 = new Question("How many days does it take for the Earth to orbit the Sun?", "365");
-//        questions[item] = q1;
-//        String nameOfQuestion = questions[item].getPrompt();
-//
-//        System.out.println(currentPlayer.getName() + " " + nameOfQuestion.substring(0, 1).toLowerCase() + nameOfQuestion.substring(1));
-//        String answer = myScanner.nextLine();
-//        if (answer.toLowerCase().equals("365")) {
-//            System.out.println("Yes! The correct answer is " + questions[item].getAnswer());
-//            currentPlayer.updateScore(50);
-//        } else if (!(answer.toLowerCase().equals("365"))) {
-//            System.out.println("Sorry. The correct answer is " + questions[item].getAnswer());
-//        }
-//
-//        item++;
-//        checkAPlayer();
-//
-//        Question q2 = new Question("What do you call a group of crows?", "murder");
-//        questions[item] = q2;
-//        nameOfQuestion = questions[item].getPrompt();
-//        System.out.println("Now, " + currentPlayer.getName() + ", " + nameOfQuestion.substring(0, 1).toLowerCase() + nameOfQuestion.substring(1));
-//        answer = myScanner.nextLine();
-//        if (answer.toLowerCase().equals("murder")) {
-//            System.out.println("Yes! The correct answer is " + questions[item].getAnswer());
-//            currentPlayer.updateScore(50);
-//        } else {
-//            System.out.println("Sorry. The correct answer is " + questions[item].getAnswer());
-//        }
-//
-//        item++;
-//        checkAPlayer();
-//
-//        Question q3 = new Question("", "");
-//        questions[item] = q3;
+        // describes winner
+        if (winner == null && winner2 == null) {
+            System.out.println("* Nobody won! *");
+        }
+        if (winner != null) {
+            System.out.println("* " + winner.getName() + " won! *");
+        }
+        if (winner2 != null) {
+            System.out.println("* " + winner2.getName() + " won! *");
+        }
+
+
+        // frame
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < longestLength + 9; j++) {
+                if (j == longestLength + 8) {
+                    System.out.print("-" + "\n");
+                } else {
+                    System.out.print("-");
+                }
+            }
+        }
     }
 
     private void checkAPlayer() {
@@ -223,7 +200,7 @@ public class GameShowLogic {
         questions[item] = q5;
         item++;
 
-        Question q6 = new Question("Eli Whitney made what invention that changed the South?", "cotton gin");
+        Question q6 = new Question("What invention made by Eli Whitney that changed the South?", "cotton gin");
         questions[item] = q6;
         item++;
 
@@ -240,7 +217,7 @@ public class GameShowLogic {
         item++;
 
         // rest of questions come from https://www.today.com/life/inspiration/trivia-questions-rcna39101
-        Question q10 = new Question("Jim Henson is the creator of what beloved cast of characters?", "muppets");
+        Question q10 = new Question("What beloved cast of characters was created by Jim Henson?", "muppets");
         questions[item] = q10;
         item++;
 
@@ -248,7 +225,7 @@ public class GameShowLogic {
         questions[item] = q11;
         item++;
 
-        Question q12 = new Question("Who starred alongside Chris Tucker in the 1998 movie \"Rush Hour\"", "jackie chan");
+        Question q12 = new Question("Who starred alongside Chris Tucker in the 1998 movie \"Rush Hour\"?", "jackie chan");
         questions[item] = q12;
         item++;
 
@@ -276,7 +253,7 @@ public class GameShowLogic {
         questions[item] = q18;
         item++;
 
-        Question q19 = new Question("M&M's Fruit Chews would eventually become what popular candy?", "starburst");
+        Question q19 = new Question("What popular candy used to be known as M&M's Fruit Chews?", "starburst");
         questions[item] = q19;
         item++;
 
@@ -290,11 +267,9 @@ public class GameShowLogic {
     private void checkScore() {
         if (player1.getScore() > player2.getScore()) {
             winner = player1;
-        }
-        if (player2.getScore() > player1.getScore()) {
+        } else if (player2.getScore() > player1.getScore()) {
             winner = player2;
-        }
-        if (player1.getScore() == player2.getScore() && player1.getScore() != 0) {
+        } else if ((player1.getScore() == player2.getScore()) && player1.getScore() != 0) {
             winner = player1;
             winner2 = player2;
         } else {
