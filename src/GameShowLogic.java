@@ -97,8 +97,19 @@ public class GameShowLogic {
             if (answer.equalsIgnoreCase(questions[item].getAnswer())) {
                 System.out.println("Yes! The correct answer is " + questions[item].getAnswer());
                 currentPlayer.updateScore(100);
+                currentPlayer.changeStreak(true);
+                currentPlayer.countStreak();
+                if (currentPlayer.getStreak()) {
+                    if (currentPlayer.getNumQuestions() == 1) {
+                        System.out.println(currentPlayer.getName() + " has activated a new streak!");
+                    } else {
+                        System.out.println(currentPlayer.getName() + " has " + currentPlayer.getNumQuestions() + " questions correct in a row!");
+                    }
+                }
             } else {
                 System.out.println("Sorry. The correct answer is " + questions[item].getAnswer());
+                currentPlayer.changeStreak(false);
+                currentPlayer.countStreak();
             }
 
             if (item % 2 == 1) {
@@ -241,7 +252,7 @@ public class GameShowLogic {
         questions[item] = q15;
         item++;
 
-        Question q16 = new Question("What species of fish is Nemo?", "clown fish");
+        Question q16 = new Question("What species of fish is Nemo?", "clownfish");
         questions[item] = q16;
         item++;
 
