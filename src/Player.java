@@ -14,6 +14,8 @@ public class Player {
     public Player() {
         score = 0;
         name = "Michael Miller";
+        hasStreak = false;
+        questionsRightInStreak = 0;
     }
 
     public int getScore() {
