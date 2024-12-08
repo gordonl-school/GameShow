@@ -86,7 +86,7 @@ public class GameShowLogic {
     }
 
     private void round() {
-        System.out.println("ROUND START");
+        System.out.println("START");
         Question[] questions = makeQuestions();
         int item = 0;
 
